@@ -18,6 +18,8 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 const itemsPerPage = 9;
+const header = document.querySelector('header');
+
 
 function showPage(list, page){
    const startIndex = (page * itemsPerPage) - itemsPerPage;
@@ -66,13 +68,66 @@ function addPagination(list){
          prevActiveButton.className ='';
          paginationButton.className ="active";
          showPage(list,paginationButton.textContent);
+         }
       }
-   })
-   
-
+   )
 }
 
+// creating a search bar
+const searchBar = document.createElement("label");
+searchBar.innerHTML ='';
+searchBar.insertAdjacentHTML('beforeend', `
+<label for="search" class="student-search">
+<span>Search by name</span>
+<input id="search" placeholder="Search by name...">
+<button id ="search-button" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>`
+);
+header.appendChild(searchBar);
 
+header.addEventListener("keyup", (e) => {
+   e.preventDefault();
+   if (e.target.id === 'search')
+      {
+      performSearch(data);
+      }
+   }  
+);
+
+header.addEventListener("click", (e) => 
+   {
+   e.preventDefault();
+   if(e.target.id ==="search-button")
+      {
+      performSearch(data);
+      }
+   }
+);
+
+
+function performSearch(list){
+   const search = document.querySelector('#search');
+   const searchInput = search.value.toLowerCase();
+   const filiteredStudents = [];
+   let searchName = '';
+   for(let i = 0 ; i < list.length; i++);
+   {
+      searchName = `${list[i].name.first.toLowerCase()} ${list[i].name.last.toLowerCase()}`;
+      if(searchInput.length !== 0 && searchName.includes(searchInput)){
+         filiteredStudents.push(list[i]);
+      }
+      //return default page if input is empty.
+      else if(searchInput.length === 0){
+         showPage(data, 1);
+         addPagination(data);
+         return;
+      }
+   }
+   return filiteredStudents;
+}  
+   
+   
+   
 
 // Call functions
 showPage(data, 1);
