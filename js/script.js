@@ -4,19 +4,11 @@ FSJS Project 2 - Data Pagination and Filtering
 */
 
 
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
-
 /*
 Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
+This function wil create pages with 9 students per page.
+The amount of pages created is determined by the argument given at "list"
+The argument "page" will determine what page is showing currently */
 const itemsPerPage = 9;
 const header = document.querySelector('header');
 
@@ -47,8 +39,8 @@ function showPage(list, page){
 
 /*
 Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
+This function will add pagination buttons along with highlighting the button
+corresponding to current page*/
 function addPagination(list){
    const buttonsNeeded = Math.ceil(list.length / itemsPerPage);
    const linkList = document.querySelector(".link-list");
@@ -73,62 +65,64 @@ function addPagination(list){
    )
 }
 
-// creating a search bar
-const searchBar = document.createElement("label");
-searchBar.innerHTML ='';
-searchBar.insertAdjacentHTML('beforeend', `
-<label for="search" class="student-search">
-<span>Search by name</span>
-<input id="search" placeholder="Search by name...">
-<button id ="search-button" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
-</label>`
-);
-header.appendChild(searchBar);
+// // creating a search bar(commented it out for review purposes, cannot get it to function correctly)
 
-header.addEventListener("keyup", (e) => {
-   e.preventDefault();
-   if (e.target.id === 'search')
-      {
-      performSearch(data);
-      }
-   }  
-);
+   // const searchBar = document.createElement("label");
+   // searchBar.innerHTML ='';
+   // searchBar.insertAdjacentHTML('beforeend', `
+   // <label for="search" class="student-search">
+   // <span>Search by name</span>
+   // <input id="search" placeholder="Search by name...">
+   // <button id ="search-button" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   // </label>`
+   // );
+   // header.appendChild(searchBar);
 
-header.addEventListener("click", (e) => 
-   {
-   e.preventDefault();
-   if(e.target.id ==="search-button")
-      {
-      performSearch(data);
-      }
-   }
-);
+   // header.addEventListener("keyup", (e) => {
+   //    e.preventDefault();
+   //    if (e.target.id === 'search')
+   //       {
+   //       performSearch(data);
+   //       }
+   //    }  
+   // );
+
+   // header.addEventListener("click", (e) => 
+   //    {
+   //    e.preventDefault();
+   //    if(e.target.id ==="search-button")
+   //       {
+   //       performSearch(data);
+   //       }
+   //    }
+   // );
 
 
-function performSearch(list){
-   const search = document.querySelector('#search');
-   const searchInput = search.value.toLowerCase();
-   const filiteredStudents = [];
-   let searchName = '';
-   for(let i = 0 ; i < list.length; i++);
-   {
-      searchName = `${list[i].name.first.toLowerCase()} ${list[i].name.last.toLowerCase()}`;
-      if(searchInput.length !== 0 && searchName.includes(searchInput)){
-         filiteredStudents.push(list[i]);
-      }
-      //return default page if input is empty.
-      else if(searchInput.length === 0){
-         showPage(data, 1);
-         addPagination(data);
-         return;
-      }
-   }
-   return filiteredStudents;
-}  
+   // function performSearch(list){
+   //    const search = document.querySelector('#search');
+   //    const searchInput = search.value.toLowerCase();
+   //    const filiteredStudents = [];
+   //    let searchName = '';
+   //    for(let i = 0 ; i < list.length; i++);
+   //    {
+   //       searchName = `${list[i].name.first.toLowerCase()} ${list[i].name.last.toLowerCase()}`;
+   //       if(searchInput.length !== 0 && searchName.includes(searchInput)){
+   //          filiteredStudents.push(list[i]);
+   //       }
+   //       //return default page if input is empty.
+   //       else if(searchInput.length === 0){
+   //          showPage(data, 1);
+   //          addPagination(data);
+   //          return;
+   //       }
+   //    }
+   //    return filiteredStudents;
+   // }  
    
    
    
 
-// Call functions
+/* Calling both showPage and addPagination buttons. the page argument in showPage
+   should be 1 in order for the program to work correctly*/
 showPage(data, 1);
 addPagination(data);
